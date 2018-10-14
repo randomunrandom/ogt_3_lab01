@@ -105,45 +105,46 @@ def graph_draw(list_of_points):
     return
 
 
-E = list()
-
-print("выберите способ задания графа одной из предложенных букв:\n\t-заранее: з\n\t-вручную: в")
-inp = input("введите выбраный способ: ")
-inp_options = {
-    'з': pre_input,
-    'в': user_input
-}
-try:
-    E = inp_options[inp]()
-except KeyError as e:
-    # можно также присвоить значение по умолчанию вместо бросания исключения
-    print("Ошибка ввода")
-    raise ValueError('Undefined unit: {}'.format(e.args[0]))
-
-print("введённый граф: ")
-graph_print(E)
-
-p_E = special_sort(E)
-
-print("подготовленный граф: ")
-graph_print(p_E)
-
-E_res = alg_Kraskala(p_E)
-
-print("полученный граф: ")
-graph_print(E_res)
-
-inp = input("показать введённый и полученный спооб?(д/н) ")
-
-if inp == "д":
+if __name__ == "__main__":
+    E = list()
+    inp_options = {
+        'з': pre_input,
+        'в': user_input
+    }
     graph_num = int(1)
-    graph_draw(E)
-    graph_num += 1
-    graph_draw(p_E)
-    graph_num += 1
-    graph_draw(E_res)
-elif inp == "н":
-    pass
-else:
-    print("Ошибка ввода")
-    raise ValueError('Undefined unit: {}'.format(inp))
+
+    print("выберите способ задания графа одной из предложенных букв:\n\t-заранее: з\n\t-вручную: в")
+    inp = input("введите выбраный способ: ")
+    try:
+        E = inp_options[inp]()
+    except KeyError as e:
+        # можно также присвоить значение по умолчанию вместо бросания исключения
+        print("Ошибка ввода")
+        raise ValueError('Undefined unit: {}'.format(e.args[0]))
+
+    print("введённый граф: ")
+    graph_print(E)
+
+    p_E = special_sort(E)
+
+    print("подготовленный граф: ")
+    graph_print(p_E)
+
+    E_res = alg_Kraskala(p_E)
+
+    print("полученный граф: ")
+    graph_print(E_res)
+
+    inp = input("показать введённый и полученный спооб?(д/н) ")
+
+    if inp == "д":
+        graph_draw(E)
+        graph_num += 1
+        graph_draw(p_E)
+        graph_num += 1
+        graph_draw(E_res)
+    elif inp == "н":
+        pass
+    else:
+        print("Ошибка ввода")
+        raise ValueError('Undefined unit: {}'.format(inp))
