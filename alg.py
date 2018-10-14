@@ -102,15 +102,49 @@ def graph_print(list_of_points):
 def graph_draw(list_of_points):  # TODO заюзать библиотеку для отрисовки граффов
     import networkx as nx
     import matplotlib.pyplot as plt
-    G = nx.MultiGraph()
+    import graphviz as gv
+
+    G = gv.Graph()
+    for i in list_of_points:
+        G.edge(str(i["coords"][0]), str(i["coords"][1]), weight=str(i["weight"]))
+
+    G.render("Graph_{}".format(graph_num), view=True)
+
+    """G = nx.MultiGraph()
     for i in list_of_points:
         G.add_edge(i["coords"][0], i["coords"][1], weight=i["weight"])
-    nx.draw_networkx(G, with_labels=True)
-    plt.show()
+    pos = nx.spring_layout(G)
+    #nx.draw(G, pos, font_size=8, with_labels=True)
+    #nx.drawing.nx_pydot.write_dot(G, 'multi.dot')
+    # nodes
+    nx.draw_networkx_nodes(G, pos,
+                           #nodelist=[0, 1, 2, 3],
+                           #node_color='r',
+                           node_size=500,
+                           alpha=0.8,
+                           with_labels=True)
+    #nx.draw_networkx_nodes(G, pos,
+                           #nodelist=[4, 5, 6, 7],
+                           #node_color='b',
+                           #node_size=500,
+                           #alpha=0.8)
+
+    # edges
+    nx.draw_networkx_edges(G, pos, width=1.0, alpha=0.5)
+    #nx.draw_networkx_edges(G, pos,
+                           #edgelist=[(0, 1), (1, 2), (2, 3), (3, 0)],
+                           #width=8, alpha=0.5, edge_color='r')
+    #nx.draw_networkx_edges(G, pos,
+                           #edgelist=[(4, 5), (5, 6), (6, 7), (7, 4)],
+                           #width=8, alpha=0.5, edge_color='b')
+    nx.draw_networkx_labels(G, pos, G.get_edge_data(), font_size=16)
+    plt.show()"""
+
     return
 
 
 E = list()
+
 print("выберите способ задания графа одной из предложенных букв:\n\t-заранее: з\n\t-вручную: в")
 inp = input("введите выбраный способ: ")
 inp_options = {
@@ -140,8 +174,11 @@ graph_print(E_res)
 inp = input("показать введённый и полученный спооб?(д/н) ")
 
 if inp == "д":
+    graph_num = int(1)
     graph_draw(E)
+    graph_num += 1
     graph_draw(p_E)
+    graph_num += 1
     graph_draw(E_res)
 elif inp == "н":
     pass
