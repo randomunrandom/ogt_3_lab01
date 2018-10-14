@@ -1,8 +1,3 @@
-import networkx as nx
-import matplotlib.pyplot as plt
-from operator import attrgetter
-
-
 def user_input():
     res_E = list()
     inp = int(input("введите количнство рёбер: "))
@@ -23,16 +18,21 @@ def user_input():
 
 def pre_input():
     res_E = list()
-    res_E.append(dict(coords=(1, 1), weight=1))
-    res_E.append(dict(coords=(1, 2), weight=3))
-    res_E.append(dict(coords=(2, 3), weight=6))
-    res_E.append(dict(coords=(1, 3), weight=9))
-    res_E.append(dict(coords=(1, 3), weight=90))
-    res_E.append(dict(coords=(1, 4), weight=15))
-    res_E.append(dict(coords=(2, 4), weight=2))
-    res_E.append(dict(coords=(3, 4), weight=19))
-    res_E.append(dict(coords=(3, 4), weight=190))
-    # res_E.append(dict(coords=list(, ), weight=))
+    res_E.append(dict(coords=(1, 2), weight=2))
+    res_E.append(dict(coords=(1, 4), weight=7))
+    res_E.append(dict(coords=(2, 3), weight=8))
+    res_E.append(dict(coords=(3, 4), weight=5))
+    res_E.append(dict(coords=(3, 4), weight=50))
+    res_E.append(dict(coords=(3, 5), weight=4))
+    res_E.append(dict(coords=(4, 5), weight=3))
+    res_E.append(dict(coords=(4, 6), weight=5))
+    res_E.append(dict(coords=(4, 8), weight=3))
+    res_E.append(dict(coords=(5, 8), weight=6))
+    res_E.append(dict(coords=(5, 9), weight=7))
+    res_E.append(dict(coords=(6, 7), weight=4))
+    res_E.append(dict(coords=(8, 9), weight=2))
+
+    # res_E.append(dict(coords=(, ), weight=))
     return res_E
 
 
@@ -62,22 +62,35 @@ def alg_Kraskala(list_of_points):  # TODO дописать реализацию 
     res = list()
     buckets = list()
     checked = False
-    for i, el in enumerate(list_of_points):
-        for b in buckets:
-            if (el["coords"][0] not in b) and (el["coords"][1] in b):
-                checked = True
-                b.append(el["coords"][0])
-                res.append(el)
-            elif (el["coords"][0] in b) and (el["coords"][1] not in b):
-                checked = True
-                b.append(el["coords"][1])
-                res.append(el)
-            elif (el["coords"][0] in b) and (el["coords"][1] in b):
-                checked = True
-                pass
-        if checked == False:
-            buckets.append([el["coords"][0], el["coords"][1]])
-            res.append(el)
+    for l_i, l_el in enumerate(list_of_points):
+        c0_b = False
+        c1_b = False
+        w = l_el["weight"]
+        for b_i, b_el in enumerate(buckets):
+            b_el.sort()
+            if l_el["coords"][0] in b_el:
+                c0_b = True
+                c0_i = b_i
+            if l_el["coords"][1] in b_el:
+                c1_b = True
+                c1_i = b_i
+        if (c0_b == False) and (c1_b == False):
+            buckets.append([l_el["coords"][0], l_el["coords"][1]])
+            res.append(l_el)
+        elif (c0_b == False) and (c1_b == True):
+            buckets[c1_i].append(l_el["coords"][0])
+            res.append(l_el)
+        elif (c0_b == True) and (c1_b == False):
+            buckets[c0_i].append(l_el["coords"][1])
+            res.append(l_el)
+        elif (c0_b == True) and (c1_b == True) and (c0_i != c1_i):
+            buckets[c0_i] += buckets[c1_i]
+            buckets.pop(c1_i)
+            buckets[c0_i].sort()
+            res.append(l_el)
+        print(l_el, " ", buckets)
+        # print(c0_b, " ", c0_i)
+        # print(c1_b, " ", c1_i)
     return res
 
 
@@ -87,6 +100,13 @@ def graph_print(list_of_points):
 
 
 def graph_draw(list_of_points):  # TODO заюзать библиотеку для отрисовки граффов
+    import networkx as nx
+    import matplotlib.pyplot as plt
+    G = nx.MultiGraph()
+    for i in list_of_points:
+        G.add_edge(i["coords"][0], i["coords"][1], weight=i["weight"])
+    nx.draw_networkx(G, with_labels=True)
+    plt.show()
     return
 
 
@@ -104,24 +124,24 @@ except KeyError as e:
     print("Ошибка ввода")
     raise ValueError('Undefined unit: {}'.format(e.args[0]))
 
-print("введённый граф:")
+print("введённый граф: ")
 graph_print(E)
 
 p_E = special_sort(E)
 
-print("подготовленный граф:")
+print("подготовленный граф: ")
 graph_print(p_E)
 
 E_res = alg_Kraskala(p_E)
 
-print("полученный граф:")
+print("полученный граф: ")
 graph_print(E_res)
 
-print("показать введённый и полученный спооб?(д/н)")
-inp = input()
+inp = input("показать введённый и полученный спооб?(д/н) ")
 
 if inp == "д":
     graph_draw(E)
+    graph_draw(p_E)
     graph_draw(E_res)
 elif inp == "н":
     pass
