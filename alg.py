@@ -33,6 +33,9 @@ def pre_input():
     res_e.append(dict(cords=(3, 4), weight=5))
     res_e.append(dict(cords=(3, 4), weight=50))
     res_e.append(dict(cords=(3, 4), weight=55))
+    res_e.append(dict(cords=(3, 4), weight=500))
+    res_e.append(dict(cords=(3, 4), weight=550))
+    res_e.append(dict(cords=(3, 4), weight=555))
     res_e.append(dict(cords=(3, 5), weight=4))
     res_e.append(dict(cords=(4, 5), weight=3))
     res_e.append(dict(cords=(4, 6), weight=5))
@@ -66,6 +69,7 @@ def special_sort(list_of_points):
                 list_to_pop.append(j)
                 p_lop[i]["weight"] = max(p_lop[i]["weight"], p_lop[j]["weight"])
 
+    list_to_pop = list(set(list_to_pop))
     list_to_pop.reverse()
     for i in list_to_pop:
         p_lop.pop(i)
@@ -89,7 +93,6 @@ def alg_Kraskala(list_of_points):
         c0_i = -1
         c1_i = -1
         for b_i, b_el in enumerate(buckets):
-            b_el.sort()
             if l_el["cords"][0] in b_el:
                 c0_b = True
                 c0_i = b_i
@@ -108,10 +111,7 @@ def alg_Kraskala(list_of_points):
         elif c0_b and c1_b and (c0_i != c1_i):
             buckets[c0_i] += buckets[c1_i]
             buckets.pop(c1_i)
-            try:
-                buckets[c0_i].sort()
-            except Exception:
-                pass
+            buckets[c0_i].sort()
             res.append(l_el)
     return res
 
