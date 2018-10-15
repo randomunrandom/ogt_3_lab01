@@ -1,4 +1,8 @@
 def user_input():
+    """
+    функция ввода графа пользователем
+    :return: list of dicts{cords=tuple(c1, c2), weight=int(w)}
+    """
     res_e = list()
     ui_inp = int(input("введите количнство рёбер: "))
     while ui_inp <= 0:
@@ -17,12 +21,18 @@ def user_input():
 
 
 def pre_input():
+    """
+    функция, возвращающая заранее заданный граф из текстовой части лабораторной работы
+    :return: list of dicts{cords=tuple(c1, c2), weight=int(w)}
+    """
     res_e = list()
+    res_e.append(dict(cords=(1, 1), weight=2))
     res_e.append(dict(cords=(1, 2), weight=2))
     res_e.append(dict(cords=(1, 4), weight=7))
     res_e.append(dict(cords=(2, 3), weight=8))
     res_e.append(dict(cords=(3, 4), weight=5))
     res_e.append(dict(cords=(3, 4), weight=50))
+    res_e.append(dict(cords=(3, 4), weight=55))
     res_e.append(dict(cords=(3, 5), weight=4))
     res_e.append(dict(cords=(4, 5), weight=3))
     res_e.append(dict(cords=(4, 6), weight=5))
@@ -37,6 +47,13 @@ def pre_input():
 
 
 def special_sort(list_of_points):
+    """
+    сортировка точек графа:
+        удаление петель
+        удаление паралельных рёбр с меньшим весом(т.к. надо найти максимальное покрывающее дерево)
+    :param list_of_points: list of dicts{cords=tuple(c1, c2), weight=int(w)}
+    :return: list of dicts{cords=tuple(c1, c2), weight=int(w)}(без петель и паралельных рёбр)
+    """
     p_lop = list()
     for i in range(len(list_of_points)):
         if list_of_points[i]["cords"][0] != list_of_points[i]["cords"][1]:
@@ -59,6 +76,11 @@ def special_sort(list_of_points):
 
 
 def alg_Kraskala(list_of_points):
+    """
+    имплементация алгоритма Краскала
+    :param list_of_points: list of dicts{cords=tuple(c1, c2), weight=int(w)}
+    :return: list of dicts{cords=tuple(c1, c2), weight=int(w)} (описывающий покрывающее дерево)
+    """
     res = list()
     buckets = list()
     for l_i, l_el in enumerate(list_of_points):
@@ -86,21 +108,34 @@ def alg_Kraskala(list_of_points):
         elif c0_b and c1_b and (c0_i != c1_i):
             buckets[c0_i] += buckets[c1_i]
             buckets.pop(c1_i)
-            buckets[c0_i].sort()
+            try:
+                buckets[c0_i].sort()
+            except Exception:
+                pass
             res.append(l_el)
     return res
 
 
 def graph_print(list_of_points):
+    """
+    вывод информации о графе
+    :param list_of_points: list of dicts{cords=tuple(c1, c2), weight=int(w)}
+    :return: nothing / ничего
+    """
     for i in list_of_points:
         print("ребро:", i["cords"], "\t, вес: ", i["weight"])
 
 
 def graph_draw(list_of_points):
+    """
+    создание рисунка графа используя библиотеку graphviz
+    :param list_of_points: list of dicts{cords=tuple(c1, c2), weight=int(w)}
+    :return: nothing / ничего
+    """
     import graphviz as gv
     g = gv.Graph()
     for i in list_of_points:
-        g.edge(str(i["cords"][0]), str(i["cords"][1]), weight=str(i["weight"]))
+        g.edge(str(i["cords"][0]), str(i["cords"][1]), weight=str(i["weight"]), label=str(i["weight"]))
     g.render("Graph_{}".format(graph_num), view=True)
     return
 
