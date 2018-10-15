@@ -102,28 +102,28 @@ def alg_Kraskala(list_of_points):
     """
     res = list()
     buckets = list()
-    for l_i, l_el in enumerate(list_of_points):
+    for l_i, l_el in enumerate(list_of_points):  # check through graphs edges
         c0_b = False
         c1_b = False
         c0_i = -1
         c1_i = -1
-        for b_i, b_el in enumerate(buckets):
-            if l_el["cords"][0] in b_el:
+        for b_i, b_el in enumerate(buckets):    #check through buckets(букеты)
+            if l_el["cords"][0] in b_el:    # memorize edges first end as in bucket(букет)
                 c0_b = True
                 c0_i = b_i
-            if l_el["cords"][1] in b_el:
+            if l_el["cords"][1] in b_el:    # memorize edges second end as in bucket(букет)
                 c1_b = True
                 c1_i = b_i
-        if (not c0_b) and (not c1_b):
+        if (not c0_b) and (not c1_b):   # if none are in the bucket
             buckets.append([l_el["cords"][0], l_el["cords"][1]])
             res.append(l_el)
-        elif (not c0_b) and c1_b:
+        elif (not c0_b) and c1_b:   # if only one is in the bucket
             buckets[c1_i].append(l_el["cords"][0])
             res.append(l_el)
-        elif c0_b and (not c1_b):
+        elif c0_b and (not c1_b):   # if only one is in the bucket
             buckets[c0_i].append(l_el["cords"][1])
             res.append(l_el)
-        elif c0_b and c1_b and (c0_i != c1_i):
+        elif c0_b and c1_b and (c0_i != c1_i): # if both are in different buckets
             buckets[c0_i] += buckets[c1_i]
             buckets.pop(c1_i)
             buckets[c0_i].sort()
@@ -153,6 +153,7 @@ def graph_draw(list_of_points, graph_num):
     import graphviz as gv
     g = gv.Graph()
     for i in list_of_points:
+        # add all of the edges to special structure
         g.edge(str(i["cords"][0]), str(i["cords"][1]), weight=str(i["weight"]), label=str(i["weight"]))
     g.render("Graph_{}".format(graph_num), view=True)
     return
