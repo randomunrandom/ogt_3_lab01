@@ -1,6 +1,7 @@
 def user_input():
     """
     функция ввода графа пользователем
+    function for inputing graph information via user
     :return: list of dicts{cords=tuple(c1, c2), weight=int(w)}
     """
     res_e = list()
@@ -23,6 +24,7 @@ def user_input():
 def pre_input():
     """
     функция, возвращающая заранее заданный граф из текстовой части лабораторной работы
+    function, returning previously mentioned graph in LW
     :return: list of dicts{cords=tuple(c1, c2), weight=int(w)}
     """
     res_e = list()
@@ -54,6 +56,9 @@ def special_sort(list_of_points):
     сортировка точек графа:
         удаление петель
         удаление паралельных рёбр с меньшим весом(т.к. надо найти максимальное покрывающее дерево)
+    sorting graph:
+        removing loops
+        removing parralel edges with lower weight(bc we need to find max covering tree)
     :param list_of_points: list of dicts{cords=tuple(c1, c2), weight=int(w)}
     :return: list of dicts{cords=tuple(c1, c2), weight=int(w)}(без петель и паралельных рёбр)
     """
@@ -82,6 +87,7 @@ def special_sort(list_of_points):
 def alg_Kraskala(list_of_points):
     """
     имплементация алгоритма Краскала
+    implementation of Kraskal's algorithm
     :param list_of_points: list of dicts{cords=tuple(c1, c2), weight=int(w)}
     :return: list of dicts{cords=tuple(c1, c2), weight=int(w)} (описывающий покрывающее дерево)
     """
@@ -119,6 +125,7 @@ def alg_Kraskala(list_of_points):
 def graph_print(list_of_points):
     """
     вывод информации о графе
+    print information about graph
     :param list_of_points: list of dicts{cords=tuple(c1, c2), weight=int(w)}
     :return: nothing / ничего
     """
@@ -129,6 +136,7 @@ def graph_print(list_of_points):
 def graph_draw(list_of_points):
     """
     создание рисунка графа используя библиотеку graphviz
+    draw graph using graphviz library
     :param list_of_points: list of dicts{cords=tuple(c1, c2), weight=int(w)}
     :return: nothing / ничего
     """
