@@ -69,6 +69,7 @@ def special_sort(list_of_points):
     p_lop = list()
     for i, i_el in enumerate(list_of_points):
         n = -1
+        m = -1
         f = False
         if i_el["cords"][0] != i_el["cords"][1]:
             # if edge isn't a loop
@@ -76,13 +77,14 @@ def special_sort(list_of_points):
                 if i_el["cords"] == j_el["cords"]:
                     f = True
                     n = j
+                    m = i
             # try to find element with the same cords
             # and if successful raise flag and remember place
             if not f:
                 p_lop.append(i_el)
             else:
                 p_lop[n]["weight"] = max(p_lop[n]["weight"],
-                                         list_of_points[n]["weight"])
+                                         list_of_points[m]["weight"])
 
     p_lop = sorted(p_lop, key=lambda k: k["weight"], reverse=True)
     # sort graph edges by weight
