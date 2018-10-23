@@ -28,27 +28,31 @@ def pre_input():
     function, returning previously mentioned graph in LW
     :return: list of dicts{cords=tuple(c1, c2), weight=int(w)}
     """
-    res_e = list()  # simple setup for setting graph
-    res_e.append(dict(cords=(1, 1), weight=2))
+    res_e = list()  # setup for inputting predetermined graph
     res_e.append(dict(cords=(1, 2), weight=2))
-    res_e.append(dict(cords=(1, 4), weight=7))
-    res_e.append(dict(cords=(2, 3), weight=8))
+    res_e.append(dict(cords=(1, 3), weight=2))
+    res_e.append(dict(cords=(2, 3), weight=1))
+    res_e.append(dict(cords=(2, 7), weight=2))
+    res_e.append(dict(cords=(2, 11), weight=7))
     res_e.append(dict(cords=(3, 4), weight=5))
-    res_e.append(dict(cords=(3, 4), weight=50))
-    res_e.append(dict(cords=(3, 4), weight=55))
-    res_e.append(dict(cords=(3, 4), weight=500))
-    res_e.append(dict(cords=(3, 4), weight=550))
-    res_e.append(dict(cords=(3, 4), weight=555))
-    res_e.append(dict(cords=(3, 5), weight=4))
-    res_e.append(dict(cords=(4, 5), weight=3))
-    res_e.append(dict(cords=(4, 6), weight=5))
-    res_e.append(dict(cords=(4, 8), weight=3))
-    res_e.append(dict(cords=(5, 8), weight=6))
-    res_e.append(dict(cords=(5, 9), weight=7))
-    res_e.append(dict(cords=(6, 7), weight=4))
-    res_e.append(dict(cords=(8, 9), weight=2))
-
-    # res_e.append(dict(cords=(, ), weight=)) TODO DELETE THIS
+    res_e.append(dict(cords=(4, 5), weight=1))
+    res_e.append(dict(cords=(4, 6), weight=2))
+    res_e.append(dict(cords=(5, 6), weight=2))
+    res_e.append(dict(cords=(5, 10), weight=2))
+    res_e.append(dict(cords=(5, 12), weight=7))
+    res_e.append(dict(cords=(7, 8), weight=3))
+    res_e.append(dict(cords=(7, 8), weight=4))
+    res_e.append(dict(cords=(9, 10), weight=3))
+    res_e.append(dict(cords=(9, 10), weight=4))
+    res_e.append(dict(cords=(11, 13), weight=3))
+    res_e.append(dict(cords=(12, 13), weight=3))
+    res_e.append(dict(cords=(13, 14), weight=1))
+    res_e.append(dict(cords=(14, 15), weight=1))
+    res_e.append(dict(cords=(14, 16), weight=1))
+    res_e.append(dict(cords=(14, 17), weight=2))
+    res_e.append(dict(cords=(17, 18), weight=1))
+    res_e.append(dict(cords=(17, 19), weight=1))
+    res_e.append(dict(cords=(18, 19), weight=2))
     return res_e
 
 
