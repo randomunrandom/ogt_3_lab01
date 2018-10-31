@@ -1,10 +1,13 @@
 def user_input():
     """
-    функция ввода графа пользователем
-    function for inputing graph information via user
+    функция ввода графа пользователем,
+    граф должен быть связанным
+    function for inputing graph information by user,
+    graph must be connected
     :return: list of dicts{cords=tuple(c1, c2), weight=int(w)}
     """
     res_e = list()
+    print("введите запрошенные данные СВЯЗАННОГО граффа")
     ui_inp = int(input("введите количнство рёбер: "))
     while ui_inp <= 0:  # check if input is correct
         ui_inp = int(input("введите положительное число"))
@@ -68,7 +71,6 @@ def special_sort(list_of_points):
         (bc we need to find max covering tree)
     :param list_of_points: list of dicts{cords=tuple(c1, c2), weight=int(w)}
     :return: list of dicts{cords=tuple(c1, c2), weight=int(w)}
-                           (без петель и паралельных рёбр)
     """
     p_lop = list()
     for i, i_el in enumerate(list_of_points):
@@ -144,8 +146,11 @@ def graph_print(list_of_points):
     :param list_of_points: list of dicts{cords=tuple(c1, c2), weight=int(w)}
     :return: nothing / ничего
     """
+    sum = int()
     for i in list_of_points:
         print("ребро:", i["cords"], "\t, вес: ", i["weight"])
+        sum += i["weight"]
+    print("вес данного графа: ", sum)
 
 
 def graph_draw(list_of_points, graph_num):
@@ -167,7 +172,7 @@ def graph_draw(list_of_points, graph_num):
     return
 
 
-if __name__ == "__main__":
+def main():
     E = list()
 
     print("выберите способ задания графа одной из предложенных букв:" +
@@ -212,3 +217,7 @@ if __name__ == "__main__":
     else:
         print("Ошибка ввода")
         raise ValueError('Undefined unit: {}'.format(inp))
+
+
+if __name__ == "__main__":
+    main()
